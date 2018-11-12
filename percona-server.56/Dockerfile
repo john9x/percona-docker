@@ -1,8 +1,8 @@
 FROM centos:7
 MAINTAINER Percona Development <info@percona.com>
 
-RUN groupadd -g 1001 mysql
-RUN useradd -u 1001 -r -g 1001 -s /sbin/nologin \
+RUN groupadd -g 60 mysql
+RUN useradd -u 60 -r -g 60 -s /sbin/nologin \
 		-c "Default Application User" mysql
 
 # check repository package signature in secure way
