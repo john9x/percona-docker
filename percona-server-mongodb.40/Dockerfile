@@ -12,22 +12,22 @@ RUN export GNUPGHOME="$(mktemp -d)" \
         && rm -rf "$GNUPGHOME" /tmp/percona-release.rpm \
         && rpm --import /etc/pki/rpm-gpg/PERCONA-PACKAGING-KEY \
         && percona-release disable all \
-        && percona-release enable original release
-                                                                                                               
+        && percona-release enable psmdb-40 release
+
 # the numeric UID is needed for OpenShift
 RUN useradd -u 1001 -r -g 0 -s /sbin/nologin \
             -c "Default Application User" mongodb
 
-ENV PERCONA_MAJOR 36
-ENV PERCONA_VERSION 3.6.10-3.0.el7
+ENV PERCONA_MAJOR 40
+ENV PERCONA_VERSION 4.0.5-2.el7
 ENV K8S_TOOLS_VERSION 0.4.1
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
         && yum install -y \
-                Percona-Server-MongoDB-36-server-${PERCONA_VERSION} \
-                Percona-Server-MongoDB-36-mongos-${PERCONA_VERSION} \
-                Percona-Server-MongoDB-36-tools-${PERCONA_VERSION} \
-                Percona-Server-MongoDB-36-shell-${PERCONA_VERSION} \
+                percona-server-mongodb-server-${PERCONA_VERSION} \
+                percona-server-mongodb-mongos-${PERCONA_VERSION} \
+                percona-server-mongodb-shell-${PERCONA_VERSION} \
+                percona-server-mongodb-tools-${PERCONA_VERSION} \
                 curl \
                 jq \
         && yum clean all \
